@@ -1,5 +1,30 @@
+cd  cd my-next-app  
+
+yarn install ou npm install
+yarn dev
 
 
+
+cd backend
+
+composer install
+
+criar aquivo .env
+
+php artisan key:generate
+
+docker-compose up -d
+
+docker-compose exec credfranco.commission bash
+
+php artisan migrate
+
+php artisan db:seed
+
+login admin admin@admin.com
+senha admin
+
+demais logins na AdminUserSeeder 
 
 ![image](https://github.com/user-attachments/assets/856c517b-8518-4e19-a79c-38f860ca9d93)
 ![image](https://github.com/user-attachments/assets/638df5b2-095c-4791-9066-0f671d0883ee)
