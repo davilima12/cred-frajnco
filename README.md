@@ -21,7 +21,7 @@ php artisan migrate
 
 php artisan db:seed
 
-login admin admin@amdin.com
+login admin admin@admin.com
 senha admin
 
 demais logins na AdminUserSeeder 
