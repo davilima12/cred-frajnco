@@ -1,6 +1,10 @@
 <?php
+
+use App\Enums\Profile;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\SalesController;
+use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
@@ -10,6 +14,12 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/me', [AuthenticatedSessionController::class, 'me']);
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+
+    Route::get('/users', function(){
+        $users = User::select('id', 'name')->where('profile_id', Profile::COMMERCIAL)->get();
+
+        return response()->json($users, 200);
+    });
 
     Route::prefix('sales')->group(function () {
 

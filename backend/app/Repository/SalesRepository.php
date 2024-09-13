@@ -19,7 +19,6 @@ class SalesRepository
         return $this->model::select(
             'sales.id',
             'u.name',
-            'sales.date',
             'u.email',
             'sales.amount',
             'sales.user_id'

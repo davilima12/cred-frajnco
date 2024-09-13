@@ -18,15 +18,6 @@ class SalesRequest extends FormRequest
         return [
             'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric|min:0',
-            'date' => ['required', 'regex:/^\d{2}\/\d{2}\/\d{4}$/'],
-        ];
-    }
-
-
-    public function messages()
-    {
-        return [
-            'date.regex' => 'A data deve estar no formato dia/mês/ano (ex: 25/12/2024).',
         ];
     }
 

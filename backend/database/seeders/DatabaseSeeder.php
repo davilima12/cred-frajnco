@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfileSeeder::class);
         $this->call(CommissionScaleSeeder::class);
         $this->call(AdminUserSeeder::class);
+        $this->call(SalesSeeder::class);
     }
 }

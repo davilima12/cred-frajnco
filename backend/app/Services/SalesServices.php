@@ -53,14 +53,12 @@ class SalesServices
     public function store(array $data): Sale
     {
 
-        $data['date'] = Carbon::parse($data['date'])->format('Y-m-d H:i:s');
         return $this->repository->store($data);
     }
 
     public function update(array $data, int $id): Sale
     {
 
-        $data['date'] = Carbon::parse($data['date'])->format('Y-m-d H:i:s');
         return $this->repository->update($data, $id);
     }
 

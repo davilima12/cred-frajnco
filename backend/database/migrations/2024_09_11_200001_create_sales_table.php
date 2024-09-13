@@ -14,7 +14,6 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->decimal('amount', 15, 2);
-            $table->date('date');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();
