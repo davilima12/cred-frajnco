@@ -25,7 +25,7 @@ class SalesSeeder extends Seeder
 
         foreach ($salesData as $userId => $amounts) {
             foreach ($amounts as $amount) {
-                Sale::withoutGlobalScopes()->firstOrCreate(
+                Sale::withoutGlobalScopes()->create(
                     [
                         'user_id' => $userId,
                         'amount' => $amount,
