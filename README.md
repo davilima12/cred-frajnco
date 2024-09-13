@@ -6,12 +6,19 @@ yarn dev
 
 
 cd backend
+
 composer install
+
 criar aquivo .env
+
 php artisan key:generate
+
 docker-compose up -d
+
 docker-compose exec credfranco.commission bash
+
 php artisan migrate
+
 php artisan db:seed
 
 login admin admin@amdin.com
