@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Toast } from 'primereact/toast';
-import { Notification } from '@/context/NotificationProvider';
-import { ExclamationIcon, CheckIcon, XIcon, RefreshIcon } from '@heroicons/react/solid';
+import { Notification } from '../../context/NotificationProvider';
 
 export default function NotificationItem({ notification, setNotifications }: NotificationItemInput) {
     const toast = useRef<any>(null);
@@ -15,7 +14,6 @@ export default function NotificationItem({ notification, setNotifications }: Not
                 life: notification.time || 3000,
             });
 
-            // Fechar a notificação após o tempo especificado
             setTimeout(() => {
                 setNotifications({ ...notification, visible: false });
             }, notification.time || 3000);

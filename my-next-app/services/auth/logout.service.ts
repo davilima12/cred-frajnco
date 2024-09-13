@@ -4,7 +4,9 @@ class LogoutService {
   Logout = async (params: any): Promise<any | false> => {
 
     const config = {
-      headers: params,  
+      headers: {
+        Authorization: params.authorization, 
+      },
     };
 
     const response = await backapi.post(`/logout`, {}, config);

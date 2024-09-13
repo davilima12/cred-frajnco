@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { HomeIcon, ChartBarIcon, XIcon, MenuIcon } from '@heroicons/react/outline';
+import { HomeIcon, XIcon, MenuIcon } from '@heroicons/react/outline';
 import Logo from '../public/images/image.png';
 import Image from 'next/image';
 import Favicon from '../public/images/favicon.png';

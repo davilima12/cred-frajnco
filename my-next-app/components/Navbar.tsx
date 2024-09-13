@@ -1,21 +1,45 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { UserIcon } from '@heroicons/react/outline';
 import { useAuth } from '../context/AuthContext';
 import { NOTIFICATION_TYPES, useNotification } from '../context/NotificationProvider';
+import { api } from '../services/api';
+import { LoadingContext } from '../context/LoadingProvider';
+import { FrontEndRoutes } from '../config/front-end-routes';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const { setLoading } = useContext(LoadingContext);
   const { logout, userData } = useAuth();
   const { addToast } = useNotification();
-
+  const router = useRouter();
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
   const handleLogout = () => {
-    addToast(NOTIFICATION_TYPES.SUCCESS, "Logout efetuado com sucesso", NOTIFICATION_TYPES.SUCCESS);
-    logout();
+    setLoading(true)
+    api.post('/auth/logout', {
+    },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          'Content-Type': 'application/json'
+        },
+      }).then(() => {
+        addToast(NOTIFICATION_TYPES.SUCCESS, "Logout efetuado com sucesso", NOTIFICATION_TYPES.SUCCESS);
+        logout();
+      }).catch(() => {
+        addToast(NOTIFICATION_TYPES.ERROR, "Error por favor contate o suporte", NOTIFICATION_TYPES.ERROR);
+        setLoading(false)
+        router.push(FrontEndRoutes.LOGIN.route);
+      })
+      .finally(() => {
+
+        setLoading(false)
+        router.push(FrontEndRoutes.LOGIN.route);
+      })
+
   };
 
   return (

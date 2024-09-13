@@ -1,5 +1,3 @@
-// AuthContext.tsx
-
 import { useRouter } from 'next/router';
 import { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfileEnum } from '../enums/UserProfileEnum';  
@@ -11,7 +9,7 @@ interface AuthContextType {
     login: (token: string, userData: any) => void;
     logout: () => void;
     checkAuth: () => Promise<boolean>;
-    hasAccess: (route: string) => boolean; 
+    hasAccess: (route: string) => Promise<boolean>; // Mudei aqui para Promise<boolean>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,6 +18,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState<any>(null);
     const router = useRouter();
+
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            setUserData(JSON.parse(storedUserData));
+        }
+    }, []);
 
     const login = (token: string, userData: any) => {
         localStorage.setItem('authToken', token);
@@ -33,7 +38,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.removeItem('userData');
         setIsAuthenticated(false);
         setUserData(null);
-        router.push('/');
     };
 
     const checkAuth = async () => {
@@ -53,20 +57,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return false;
     };
 
-    const hasAccess = (route: string) => {
+    const hasAccess = async (route: string) => {
+        if (!userData) {
+            const storedUserData = localStorage.getItem('userData');
+            if (storedUserData) {
+                setUserData(JSON.parse(storedUserData));
+            } else {
+                return false; 
+            }
+        }
+
+
         if (!userData || !userData.profile_id) {
             return false;
         }
 
+        const routeConfig: any = Object.values(FrontEndRoutes).find((r) => r.route === route);
 
-        const routeConfig:any = Object.values(FrontEndRoutes).find((r) => r.route === route);
-
-        if(routeConfig?.profiles && routeConfig?.profiles?.length < 0) {
+        if (routeConfig?.profiles && routeConfig.profiles.length < 0) {
             return true;
         }
 
         if (routeConfig) {
-
             return routeConfig.profiles.includes(userData.profile_id);
         }
 
