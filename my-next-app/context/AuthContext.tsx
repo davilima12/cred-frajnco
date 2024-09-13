@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (routeConfig?.profiles && routeConfig.profiles.length < 0) {
             return true;
         }
-
+        console.log(routeConfig, userData, routeConfig.profiles.includes(userData.profile_id))
         if (routeConfig) {
             return routeConfig.profiles.includes(userData.profile_id);
         }
